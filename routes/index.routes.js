@@ -5,11 +5,6 @@ const authRoutes = require("./auth.routes");
 router.get("/", (req, res, next) => {
   res.json("All good in here");
 
-
-  1. zur Datenbank hinzufügen 
-  // rout.get --> all recipients 
-
-
   router.post("/ListPage")
 });
 
