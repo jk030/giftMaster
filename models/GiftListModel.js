@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 
 const giftListSchema = new Schema(
 {
+    id:String,
     picturePerson:String,
     name:String,
     personalDetails:String,
