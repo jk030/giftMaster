@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
-const giftListSchema = new Schema(
+const RecipientSchema = new Schema(
 {
     picturePerson:String,
     name:String,
@@ -36,6 +36,6 @@ const giftListSchema = new Schema(
 }
 )
 
-const User = mongoose.model("GiftList", giftListSchema);
+const Recipient = mongoose.model("Recipient", RecipientSchema);
 
-module.exports = giftListSchema;
+module.exports = Recipient;
