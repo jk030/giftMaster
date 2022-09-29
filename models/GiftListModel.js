@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const giftListSchema = new Schema(
 {
-    id:String,
+
     picturePerson:String,
     name:String,
     personalDetails:String,
@@ -37,6 +37,6 @@ const giftListSchema = new Schema(
 }
 )
 
-const User = mongoose.model("GiftList", giftListSchema);
+const GiftList = mongoose.model("GiftList", giftListSchema);
 
-module.exports = giftListSchema;
+module.exports = GiftList;
