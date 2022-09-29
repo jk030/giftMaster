@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const express = require("express")
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 const saltRounds = 10;
 const { isAuthenticated } = require('../middleware/jwt.middleware');
@@ -88,21 +89,23 @@ router.post('/login', (req, res, next) => {
 
       // Compare the provided password with the one saved in the database
       const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
-
+      console.log(passwordCorrect)
       if (passwordCorrect) {
         // Deconstruct the user object to omit the password
-        const { _id, email, userName } = foundUser;
+        const { _id, email } = foundUser;
         
         // Create an object that will be set as the token payload
-        const payload = { _id, email, userName };
-
+        const payload = { _id, email };
+        console.log(payload)
+        console.log(process.env.TOKEN_SECRET)
         // Create and sign the token
-        const authToken = jwt.sign( 
+        const authToken = jwt.sign(
           payload,
           process.env.TOKEN_SECRET,
-          { algorithm: 'HS256', expiresIn: "6h" }
+          { algorithm: 'HS256' }
         );
-
+        
+          console.log('authToken', authToken);
         // Send the token as the response
         res.status(200).json({ authToken: authToken });
       }
