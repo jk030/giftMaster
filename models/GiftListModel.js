@@ -6,6 +6,7 @@ const giftListSchema = new Schema(
     picturePerson:String,
     name:String,
     personalDetails:String,
+    user: [{ type: Schema.Types.ObjectId, ref: 'User'}],
     occasion:{
         type:String,
         enum:["Christmas","Birthday","Hanukkah","Easter","Wedding"],
@@ -18,7 +19,7 @@ const giftListSchema = new Schema(
     },//(specific things you might want)
     unwanted:{
     type:String,
-    },//(specififc things you dont need or already have)
+    },//(specific things you dont need or already have)
 
     priceSpan:{
         type:Number,
