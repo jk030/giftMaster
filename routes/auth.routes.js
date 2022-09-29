@@ -1,21 +1,19 @@
 const router = require("express").Router();
 const express = require("express")
-// ℹ️ Handles password encryption
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-
-// How many rounds should bcrypt run the salt (default [10 - 12 rounds])
 const saltRounds = 10;
 const { isAuthenticated } = require('../middleware/jwt.middleware');
-
-// Require the User model in order to interact with the database
 const User = require("../models/User.model");
 
 // POST /auth/signup - Creates a new user in the database
+
 router.post("/signup", (req, res) => {
+  console.log("Hello")
   const { email, password, userName } = req.body;
 
-  if (email === '' || password === '' || userName) {
+  if (email === '' || password === '' || userName === '') {
     return res
       .status(400)
       .json({ errorMessage: "Please provide your email, password, userName" });
@@ -91,21 +89,23 @@ router.post('/login', (req, res, next) => {
 
       // Compare the provided password with the one saved in the database
       const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
-
+      console.log(passwordCorrect)
       if (passwordCorrect) {
         // Deconstruct the user object to omit the password
-        const { _id, email, userName } = foundUser;
+        const { _id, email } = foundUser;
         
         // Create an object that will be set as the token payload
-        const payload = { _id, email, userName };
-
+        const payload = { _id, email };
+        console.log(payload)
+        console.log(process.env.TOKEN_SECRET)
         // Create and sign the token
-        const authToken = jwt.sign( 
+        const authToken = jwt.sign(
           payload,
           process.env.TOKEN_SECRET,
-          { algorithm: 'HS256', expiresIn: "6h" }
+          { algorithm: 'HS256' }
         );
-
+        
+          console.log('authToken', authToken);
         // Send the token as the response
         res.status(200).json({ authToken: authToken });
       }
