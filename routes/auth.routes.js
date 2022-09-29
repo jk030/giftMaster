@@ -1,21 +1,18 @@
 const router = require("express").Router();
 const express = require("express")
-// ℹ️ Handles password encryption
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
-
-// How many rounds should bcrypt run the salt (default [10 - 12 rounds])
 const saltRounds = 10;
 const { isAuthenticated } = require('../middleware/jwt.middleware');
-
-// Require the User model in order to interact with the database
 const User = require("../models/User.model");
 
 // POST /auth/signup - Creates a new user in the database
+
 router.post("/signup", (req, res) => {
+  console.log("Hello")
   const { email, password, userName } = req.body;
 
-  if (email === '' || password === '' || userName) {
+  if (email === '' || password === '' || userName === '') {
     return res
       .status(400)
       .json({ errorMessage: "Please provide your email, password, userName" });
