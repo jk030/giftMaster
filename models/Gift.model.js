@@ -3,14 +3,15 @@ const Schema = mongoose.Schema
 
 const GiftSchema = new Schema(
     {
+    id: String,
     title: String,
+    recipient: [{ type: Schema.Types.ObjectId, ref: 'Recipient'}],
     priceSpan: Number,
     occasion: {
         type: String,
         enum: ["Christmas","Birthday","Hanukkah","Easter","Wedding"]
         },
     imageGift: String,
-    title: String,
     link: String,
     notes:{
         type:String,
