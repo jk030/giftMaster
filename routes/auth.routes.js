@@ -10,7 +10,6 @@ const User = require("../models/User.model");
 // POST /auth/signup - Creates a new user in the database
 
 router.post("/signup", (req, res) => {
-  console.log("Hello")
   const { email, password, userName } = req.body;
 
   if (email === '' || password === '' || userName === '') {
@@ -54,6 +53,7 @@ router.post("/signup", (req, res) => {
       // Deconstruct the newly created user object to omit the password
       // We should never expose passwords publicly
       const { email, userName, _id } = createdUser;
+      console.log(createdUser)
     
       // Create a new object that doesn't expose the password
       const user = { email, userName, _id };
