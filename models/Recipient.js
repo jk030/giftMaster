@@ -32,9 +32,8 @@ const RecipientSchema = new Schema(
     notes:{
         type:String,
         maxLength: 500,
-}
-
-
+    }, 
+    user: [{ type: Schema.Types.ObjectId, ref: "User" }]
 }
 )
 
