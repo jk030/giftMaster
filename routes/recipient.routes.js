@@ -65,6 +65,3 @@ router.delete('/recipients/:recipientId', (req, res, next) => {
 });
 
 module.exports = router;
-
-// changed the wording with Marco --> Recipient makes more sense, because with this route we create a new Recipient, not a list 
-// + the route is wrong - see figma to see the name // it should be /addRecipient
