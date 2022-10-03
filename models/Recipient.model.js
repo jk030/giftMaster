@@ -8,6 +8,7 @@ const RecipientSchema = new Schema(
     name:String,
     personalDetails:String,
     user: [{ type: Schema.Types.ObjectId, ref: 'User'}],
+    
     preference: {
      type:String,
      maxLength: 500,
