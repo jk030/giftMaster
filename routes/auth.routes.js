@@ -11,6 +11,7 @@ const User = require("../models/User.model");
 
 router.post("/signup", (req, res) => {
   const { email, password, userName } = req.body;
+  //console.log(req.body)
 
   if (email === '' || password === '' || userName === '') {
     return res
