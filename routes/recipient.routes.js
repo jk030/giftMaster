@@ -10,8 +10,11 @@ router.post("/recipients", (req, res, next) => {
   
     Recipient.create({name, personalDetails, user: userId, imageRecipient, preference, unwanted })
       .then(newRecipient => {
-         Recipient.findByIdAndUpdate(userId, { $push: { recipients: newRecipient._id } } );
-         res.json(newRecipient)
+         return User.findByIdAndUpdate(userId, { $push: { recipients: newRecipient._id } }, {new: true} )
+         .then( updatedUser =>{
+          console.log(updatedUser)
+          res.json(updatedUser)
+         })
       })
       .catch((err) => res.json(err));
 });

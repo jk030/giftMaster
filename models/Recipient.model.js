@@ -6,6 +6,7 @@ const RecipientSchema = new Schema(
     id: String,
     imageRecipient:String,
     name:String,
+    // gift: [{ type: Schema.Types.ObjectId, ref: 'Gift'}],
     personalDetails:String,
     user: [{ type: Schema.Types.ObjectId, ref: 'User'}],
     preference: {

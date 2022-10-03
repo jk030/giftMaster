@@ -1,16 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const Recipient = require("../models/Recipient")
 const User = require("../models/User.model")
 
 
-router.get("/profilePage/:id", (req, res, next) => {
-    Recipient.find()
-      .then((allRecipients) => res.json(allRecipients))
+router.get("/profilePage/:userId", (req, res, next) => {
+  const { userId } = req.params;
+    User.findById(userId)
+      .populate("recipient")
+      .then((allDetails) => res.json(allDetails))
       .catch((err) => res.json(err));
-  });
-  
-
+});
   
   module.exports = router;
