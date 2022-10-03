@@ -12,10 +12,11 @@ const userSchema = new Schema(
   lastName: String,
   birthday: Date,
   religion: String,
-  },
-  {
+  recipient: [{ type: Schema.Types.ObjectId, ref: "Recipient" }],
+},
+{
   timestamps: true,
-  }
+}, 
 );
 
 const User = mongoose.model("User", userSchema);

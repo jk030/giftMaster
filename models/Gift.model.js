@@ -10,12 +10,12 @@ const GiftSchema = new Schema(
         enum: ["Christmas","Birthday","Hanukkah","Easter","Wedding"]
         },
     imageGift: String,
-    title: String,
     link: String,
     notes:{
         type:String,
         maxLength: 500,
-        }
+        },
+    recipient: [{ type: Schema.Types.ObjectId, ref: 'Recipient' }],
     }
 )
 
