@@ -10,15 +10,21 @@ router.post("/gifts", (req, res, next) => {
   
     Gift.create({ title, priceSpan, occasion, imageGift, link, notes, recipient: recipientId})
       .then(newGift => {
-         Gift.findByIdAndUpdate(recipientId, { $push: { gifts: newGift._id } } );
-         res.json(newGift)
+        console.log('newGift',newGift)
+        return Recipient.findByIdAndUpdate(recipientId, { $push: { gifts: newGift._id } }, {new: true} )
+        .then( updatedRecipient => {
+          console.log('updatedRecipient', updatedRecipient)
+          res.json(updatedRecipient)
+         })
       })
       .catch((err) => res.json(err));
 });
 
+
 // GET /api/gifts - Retrieves all the gifts
 router.get('/gifts', (req, res, next) => {
     Gift.find()
+      .populate("recipient")
       .then((allGifts) => res.json(allGifts))
       .catch((err) => res.json(err))
 });

@@ -10,7 +10,7 @@ router.post("/recipients", (req, res, next) => {
   
     Recipient.create({name, personalDetails, user: userId, imageRecipient, preference, unwanted })
       .then(newRecipient => {
-         return User.findByIdAndUpdate(userId, { $push: { recipients: newRecipient._id } }, {new: true} )
+         return User.findByIdAndUpdate(userId, { $push: { recipient: newRecipient._id } }, {new: true} )
          .then( updatedUser =>{
           console.log(updatedUser)
           res.json(updatedUser)
@@ -35,6 +35,7 @@ router.get('/recipients/:recipientId', (req, res, next) => {
     return;
   }
   Recipient.findById(recipientId)
+    .populate("gifts")
     .then(recipient => res.status(200).json(recipient))
     .catch(error => res.json(error));
 });
@@ -63,8 +64,29 @@ router.delete('/recipients/:recipientId', (req, res, next) => {
   }
  
   Recipient.findByIdAndRemove(recipientId)
-    .then(() => res.json({ message: `Recipient with ${recipientId} is removed successfully.` }))
-    .catch(error => res.json(error));
+    .then(deletedRecipient => {
+      console.log(deletedRecipient)
+      return User.findByIdAndUpdate(deletedRecipient.user, { $pull: { recipient: recipientId } }, {new: true} )
+      .then( updatedUser =>{
+            console.log(updatedUser)
+             res.json({ message: `Recipient with ${recipientId} is removed successfully.` })})
+}).catch(error => res.json(error));
 });
 
 module.exports = router;
+
+
+
+// router.delete('/recipients/:recipientId', (req, res, next) => {
+//   const { recipientId } = req.params;
+  
+//   if (!mongoose.Types.ObjectId.isValid(recipientId)) {
+//     res.status(400).json({ message: 'Specified id is not valid' });
+//     return;
+//   }
+ 
+//   Recipient.findByIdAndRemove(recipientId)
+//     .then(() => res.json({ message: `Recipient with ${recipientId} is removed successfully.` }))
+//     .catch(error => res.json(error));
+// });
+
