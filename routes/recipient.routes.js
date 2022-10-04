@@ -6,11 +6,11 @@ const User = require("../models/User.model")
 
 //  POST /api/recipients  -  Creates a new recipient
 router.post("/recipients", (req, res, next) => {
-    const { name, personalDetails, userId, imageRecipient, preference, unwanted } = req.body;
-  
-    Recipient.create({name, personalDetails, user: userId, imageRecipient, preference, unwanted })
+    const { name, personalDetails, userId, imageRecipient, preference, unwanted, userName} = req.body;
+    console.log(req.body)
+    Recipient.create({name, personalDetails, user: userId, imageRecipient, preference, unwanted, user: userName})
       .then(newRecipient => {
-         return User.findByIdAndUpdate(userId, { $push: { recipients: newRecipient._id } }, {new: true} )
+         return User.findByIdAndUpdate(userId, { $push: { recipient: newRecipient._id } }, {new: true} )
          .then( updatedUser =>{
           console.log(updatedUser)
           res.json(updatedUser)
@@ -22,6 +22,7 @@ router.post("/recipients", (req, res, next) => {
 // GET /api/recipients - Retrieves all the recipients
 router.get('/recipients', (req, res, next) => {
   Recipient.find()
+    .populate("user")
     .then((allRecipients) => res.json(allRecipients))
     .catch((err) => res.json(err))
 });
