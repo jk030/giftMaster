@@ -108,6 +108,7 @@ router.post('/login', (req, res, next) => {
         
           console.log('authToken', authToken);
         // Send the token as the response
+
         res.status(200).json({ authToken: authToken, userId: _id });
       }
       else {

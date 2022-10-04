@@ -28,8 +28,9 @@ app.use('/api', recipientRouter)
 const giftRouter = require("./routes/gift.routes");
 app.use('/api', giftRouter)
 
-const profileRouter = require("./routes/profile.routes");
-app.use('/', profileRouter )
+
+const profileRouter = require("./routes/profile.routes")
+app.use("/",profileRouter)
 
 // const listeRouter = require("./routes/list.routes");
 // app.use('/', listeRouter )
