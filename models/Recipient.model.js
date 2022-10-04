@@ -5,10 +5,9 @@ const RecipientSchema = new Schema(
     {
     imageRecipient:String,
     name:String,
-    // gift: [{ type: Schema.Types.ObjectId, ref: 'Gift'}],
+    gifts: [{ type: Schema.Types.ObjectId, ref: 'Gift'}],
     personalDetails:String,
     user: { type: Schema.Types.ObjectId, ref: 'User'},
-    
     preference: {
      type:String,
      maxLength: 500,
