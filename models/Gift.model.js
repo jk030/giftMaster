@@ -5,7 +5,9 @@ const GiftSchema = new Schema(
     {
     title: String,
     priceSpan: Number,
+
     occasion: String,
+
     imageGift: String,
     link: String,
     notes:{

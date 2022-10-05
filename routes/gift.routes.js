@@ -3,20 +3,38 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Recipient = require("../models/Recipient.model")
 const Gift = require("../models/Gift.model")
+const fileUploader = require("../config/cloudinary");
+
+// POST "/api/upload" => Route that receives the image, sends it to Cloudinary via the fileUploader and returns the image URL
+router.post("/upload", fileUploader.single("imageGift"), (req, res, next) => {
+  console.log("file is: ", req.file)
+ 
+  if (!req.file) {
+    next(new Error("No file uploaded!"));
+    return;
+  }
+  
+  // Get the URL of the uploaded file and send it as a response.
+  // 'fileUrl' can be any name, just make sure you remember to use the same when accessing it on the frontend
+  
+  res.json({ fileUrl: req.file.path });
+});
 
 //  POST /api/gifts  -  Creates a new gift
 router.post("/gifts", (req, res, next) => {
     const { title, priceSpan, occasion, imageGift, link, notes, recipientId  } = req.body;
-  
+    console.log("req.body", req.body)
+
     Gift.create({ title, priceSpan, occasion, imageGift, link, notes, recipient: recipientId})
       .then(newGift => {
+        console.log("hallo")
         console.log('newGift',newGift)
         return Recipient.findByIdAndUpdate(recipientId, { $push: { gifts: newGift._id } }, {new: true} )
-        .then( updatedRecipient => {
-          console.log('updatedRecipient', updatedRecipient)
-          res.json(updatedRecipient)
-         })
       })
+      .then( updatedRecipient => {
+        console.log('updatedRecipient', updatedRecipient)
+        res.json(updatedRecipient)
+       })
       .catch((err) => res.json(err));
 });
 
@@ -24,7 +42,6 @@ router.post("/gifts", (req, res, next) => {
 // GET /api/gifts - Retrieves all the gifts
 router.get('/gifts', (req, res, next) => {
     Gift.find()
-      .populate("recipient")
       .then((allGifts) => res.json(allGifts))
       .catch((err) => res.json(err))
 });
