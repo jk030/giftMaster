@@ -23,14 +23,14 @@ router.post("/upload", fileUploader.single("imageRecipient"), (req, res, next) =
 //  POST /api/recipients  -  Creates a new recipient
 router.post("/recipients", (req, res, next) => {
     const { name, personalDetails, userId, imageRecipient, preference, unwanted} = req.body;
-    console.log(req.body)
+    // console.log(req.body)
     Recipient.create({name, personalDetails, user: userId, imageRecipient, preference, unwanted})
 
       .then(newRecipient => {
-        console.log("newRecipient", newRecipient)
+        // console.log("newRecipient", newRecipient)
          return User.findByIdAndUpdate(userId, { $push: { recipient: newRecipient._id } }, {new: true} )
          .then( updatedUser =>{
-          console.log("updatedUser",updatedUser)
+          // console.log("updatedUser",updatedUser)
           res.json(updatedUser)
          })
       })
@@ -83,10 +83,10 @@ router.delete('/recipients/:recipientId', (req, res, next) => {
  
   Recipient.findByIdAndRemove(recipientId)
     .then(deletedRecipient => {
-      console.log(deletedRecipient)
+      // console.log(deletedRecipient)
       return User.findByIdAndUpdate(deletedRecipient.user, { $pull: { recipient: recipientId } }, {new: true} )
       .then( updatedUser =>{
-            console.log(updatedUser)
+            // console.log(updatedUser)
              res.json({ message: `Recipient with ${recipientId} is removed successfully.` })})
 }).catch(error => res.json(error));
 });

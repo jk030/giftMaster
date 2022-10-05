@@ -3,6 +3,22 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Recipient = require("../models/Recipient.model")
 const Gift = require("../models/Gift.model")
+const fileUploader = require("../config/cloudinary");
+
+// POST "/api/upload" => Route that receives the image, sends it to Cloudinary via the fileUploader and returns the image URL
+router.post("/upload", fileUploader.single("imageGift"), (req, res, next) => {
+  console.log("file is: ", req.file)
+ 
+  if (!req.file) {
+    next(new Error("No file uploaded!"));
+    return;
+  }
+  
+  // Get the URL of the uploaded file and send it as a response.
+  // 'fileUrl' can be any name, just make sure you remember to use the same when accessing it on the frontend
+  
+  res.json({ fileUrl: req.file.path });
+});
 
 //  POST /api/gifts  -  Creates a new gift
 router.post("/gifts", (req, res, next) => {
