@@ -40,6 +40,7 @@ router.post("/recipients", (req, res, next) => {
 // GET /api/recipients - Retrieves all the recipients
 router.get('/recipients', (req, res, next) => {
   Recipient.find()
+    .populate("user")
     .then((allRecipients) => res.json(allRecipients))
     .catch((err) => res.json(err))
 });
