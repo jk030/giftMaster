@@ -38,6 +38,7 @@ router.get('/gifts/:giftId', (req, res, next) => {
       return;
     }
     Gift.findById(giftId)
+      .populate("recipient")
       .then(gift => res.status(200).json(gift))
       .catch(error => res.json(error));
 });
