@@ -2,17 +2,34 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Recipient = require("../models/Recipient.model")
-const User = require("../models/User.model")
+const User = require("../models/User.model");
+const fileUploader = require("../config/cloudinary");
+
+// POST "/api/upload" => Route that receives the image, sends it to Cloudinary via the fileUploader and returns the image URL
+router.post("/upload", fileUploader.single("imageRecipient"), (req, res, next) => {
+  console.log("file is: ", req.file)
+ 
+  if (!req.file) {
+    next(new Error("No file uploaded!"));
+    return;
+  }
+  
+  // Get the URL of the uploaded file and send it as a response.
+  // 'fileUrl' can be any name, just make sure you remember to use the same when accessing it on the frontend
+  
+  res.json({ fileUrl: req.file.path });
+});
 
 //  POST /api/recipients  -  Creates a new recipient
 router.post("/recipients", (req, res, next) => {
     const { name, personalDetails, userId, imageRecipient, preference, unwanted } = req.body;
-  
+    console.log(imageRecipient);
     Recipient.create({name, personalDetails, user: userId, imageRecipient, preference, unwanted })
       .then(newRecipient => {
+        
          return User.findByIdAndUpdate(userId, { $push: { recipient: newRecipient._id } }, {new: true} )
          .then( updatedUser =>{
-          console.log(updatedUser)
+          // console.log(updatedUser)
           res.json(updatedUser)
          })
       })
