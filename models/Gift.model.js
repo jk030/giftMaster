@@ -5,10 +5,7 @@ const GiftSchema = new Schema(
     {
     title: String,
     priceSpan: Number,
-    occasion: {
-        type: String,
-        enum: ["Christmas","Birthday","Hanukkah","Easter","Wedding"]
-        },
+    occasion: String, 
     imageGift: String,
     link: String,
     notes:{

@@ -4,11 +4,6 @@ const mongoose = require("mongoose");
 const User = require("../models/User.model")
 
 
-
-
-
-
-
 router.get("/profilePage/:userId", (req, res, next) => {
   const { userId } = req.params;
 
