@@ -4,6 +4,10 @@ module.exports = (app) => {
     res.status(404).json({ errorMessage: "This route does not exist" });
   });
 
+  app.use((error, req, res, next) => {
+    console.log('This is the rejected field ->', error.field);
+  });
+
   app.use((err, req, res, next) => {
     // whenever you call next(err), this middleware will handle the error
     // always logs the error
@@ -16,4 +20,6 @@ module.exports = (app) => {
       });
     }
   });
+
+
 };
