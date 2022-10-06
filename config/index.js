@@ -23,7 +23,7 @@ module.exports = (app) => {
   app.use(
     cors({
       credentials: true,
-      origin: process.env.ORIGIN || "http://localhost:3000", // "deployment_url" --> Add for deployment --> go to db -> index 
+      origin: ["https://giftmaster-goodtimes.netlify.app", "http://localhost:3000"], // "deployment_url" --> Add for deployment --> go to db -> index 
     })
   );
 
