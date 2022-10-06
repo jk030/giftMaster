@@ -77,13 +77,13 @@ router.put('/gifts/:giftId', (req, res, next) => {
 // DELETE  /api/gifts/:giftId  -  Deletes a specific gift by id
 router.delete('/gifts/:giftId', (req, res, next) => {
     const { giftId } = req.params;
-    
+    console.log(giftId)
     if (!mongoose.Types.ObjectId.isValid(giftId)) {
       res.status(400).json({ message: 'Specified id is not valid' });
       return;
     }
    
-    Gift.findByIdAndRemove(giftId)
+    Gift.findByIdAndDelete(giftId)
       .then(() => res.json({ message: `Gift with ${giftId} is removed successfully.` }))
       .catch(error => res.json(error));
 });

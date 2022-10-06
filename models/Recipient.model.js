@@ -12,7 +12,7 @@ const RecipientSchema = new Schema(
     unwanted: {
     type:String,
         },//(specific things you dont need or already have)
-
+    privacy:Boolean,
     }
 )
 
