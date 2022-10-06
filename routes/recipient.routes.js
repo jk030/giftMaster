@@ -22,9 +22,9 @@ router.post("/upload", fileUploader.single("imageRecipient"), (req, res, next) =
 
 //  POST /api/recipients  -  Creates a new recipient
 router.post("/recipients", (req, res, next) => {
-    const { name, personalDetails, userId, imageRecipient, preference, unwanted} = req.body;
+    const { name, personalDetails, userId, imageRecipient, preference, unwanted, privacy} = req.body;
     // console.log(req.body)
-    Recipient.create({name, personalDetails, user: userId, imageRecipient, preference, unwanted})
+    Recipient.create({name, personalDetails, user: userId, imageRecipient, preference, unwanted, privacy})
 
       .then(newRecipient => {
         // console.log("newRecipient", newRecipient)
