@@ -22,11 +22,13 @@ app.use("/api", allRoutes);
 const authRouter = require("./routes/auth.routes");
 app.use("/auth", authRouter);
 
+const giftRouter = require("./routes/gift.routes");
+app.use('/api', giftRouter)
+
 const recipientRouter = require("./routes/recipient.routes");
 app.use('/api', recipientRouter)
 
-const giftRouter = require("./routes/gift.routes");
-app.use('/api', giftRouter)
+
 
 
 const profileRouter = require("./routes/profile.routes")
