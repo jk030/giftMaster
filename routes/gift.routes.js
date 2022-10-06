@@ -8,6 +8,7 @@ const fileUploader = require("../config/cloudinary");
 
 // POST "/api/upload" => Route that receives the image, sends it to Cloudinary via the fileUploader and returns the image URL
 router.post("/gifts/upload", fileUploader.single("imageGift"), (req, res, next) => {
+
   console.log("file is: ", req.file)
  
   if (!req.file) {
